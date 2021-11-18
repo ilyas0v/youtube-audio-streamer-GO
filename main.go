@@ -10,8 +10,8 @@ import (
 )
 
 func main(){
-	listernAddr := `localhost`
-	addr := listernAddr + `:` + `8888`
+	listenAddr := os.Getenv("LISTEN_ADDR")
+	addr := listenAddr + `:` + os.Getenv("PORT")
 
 	http.HandleFunc("/watch", stream)
 
