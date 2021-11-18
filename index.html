@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yotube audio streaming</title>
+</head>
+<body>
+    <h1>Youtube audio</h1>
+    <form action="" onsubmit="extractVideoId(event)">
+        <label for="">Video url:</label>
+        <input type="text" name="v" id="v">
+        <input type="submit" value="Convert" id="btn">
+    </form>
+
+    <script>
+
+        function youtubeParser(url){
+            var regExp = /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+            var match = url.match(regExp);
+            return (match && match[1].length==11)? match[1] : false;
+        }
+
+        function extractVideoId(event)
+        {
+            event.preventDefault();
+            var input = document.getElementById("v");
+            var url = input.value;
+            var btn = document.getElementById("btn");
+            
+            var id = youtubeParser(url);
+
+            if(id)
+            {
+                window.location.href = "/watch?v=" + id;
+                input.disabled = true;
+                btn.disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>

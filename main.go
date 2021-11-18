@@ -13,11 +13,16 @@ func main(){
 	listenAddr := os.Getenv("LISTEN_ADDR")
 	addr := listenAddr + `:` + os.Getenv("PORT")
 
+	http.HandleFunc("/", index)
 	http.HandleFunc("/watch", stream)
 
 	log.Printf("Starting server at %s", addr)
 
 	log.Fatal(http.ListenAndServe(addr, nil))
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "index.html")
 }
 
 func stream(w http.ResponseWriter, r *http.Request) {
